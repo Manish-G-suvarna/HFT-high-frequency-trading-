@@ -1,4 +1,4 @@
-#include "market_event.hpp"
+#include "feed_handler.hpp"
 
 #include <cstdint>
 #include <iostream>
@@ -37,33 +37,45 @@ int main()
         }
     };
 
+    hft::FeedHandler feed_handler;
+
     for (const auto& event : events)
     {
-        std::cout
-            << "timestamp=" << event.timestamp
-            << " symbol=" << event.symbol_id
-            << " price=" << event.price
-            << " quantity=" << event.quantity
-            << " side="
-            << (event.side == hft::Side::BUY ? "BUY" : "SELL")
-            << " type=";
+        feed_handler.process(
+            event,
+            [](const hft::MarketEvent& normalized_event)
+            {
+                std::cout
+                    << "timestamp=" << normalized_event.timestamp
+                    << " symbol=" << normalized_event.symbol_id
+                    << " price=" << normalized_event.price
+                    << " quantity=" << normalized_event.quantity
+                    << " side="
+                    << (
+                        normalized_event.side == hft::Side::BUY
+                            ? "BUY"
+                            : "SELL"
+                    )
+                    << " type=";
 
-        switch (event.type)
-        {
-            case hft::EventType::ADD:
-                std::cout << "ADD";
-                break;
+                switch (normalized_event.type)
+                {
+                    case hft::EventType::ADD:
+                        std::cout << "ADD";
+                        break;
 
-            case hft::EventType::CANCEL:
-                std::cout << "CANCEL";
-                break;
+                    case hft::EventType::CANCEL:
+                        std::cout << "CANCEL";
+                        break;
 
-            case hft::EventType::TRADE:
-                std::cout << "TRADE";
-                break;
-        }
+                    case hft::EventType::TRADE:
+                        std::cout << "TRADE";
+                        break;
+                }
 
-        std::cout << '\n';
+                std::cout << '\n';
+            }
+        );
     }
 
     return 0;
