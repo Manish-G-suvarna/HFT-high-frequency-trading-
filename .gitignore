@@ -1,0 +1,34 @@
+# Build
+build/
+cmake-build-*/
+out/
+
+# Compiled binaries
+*.o
+*.obj
+*.exe
+*.out
+
+# Debug
+*.dSYM/
+core
+core.*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Benchmark output
+benchmark_results/
+results/
+
+# Temporary
+*.tmp
+*.swp
