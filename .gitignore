@@ -9,6 +9,14 @@ out/
 *.exe
 *.out
 
+# Local benchmark executables
+cache_latency
+cache_pointer_chasing
+rdtsc_overhead
+timing_baseline
+timing_methods
+market_data_simulator
+
 # Debug
 *.dSYM/
 core
